@@ -24,6 +24,7 @@ package org.firstinspires.ftc.teamcode.KiwiDrive.Autonomous;
 import android.annotation.SuppressLint;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -39,10 +40,11 @@ import org.openftc.easyopencv.OpenCvCameraRotation;
 
 import java.util.ArrayList;
 
+@Disabled
 @Autonomous(name = "KiwiAprilTagCamera")
 public class KiwiAutonomousAprilTag extends LinearOpMode
 {
-    //region CameraSpecs
+    //region CameraSpecs(CHANGE LENS INTRINSICS)
     private OpenCvCamera camera;
     private static final double FEET_PER_METER = 3.28084;
 
