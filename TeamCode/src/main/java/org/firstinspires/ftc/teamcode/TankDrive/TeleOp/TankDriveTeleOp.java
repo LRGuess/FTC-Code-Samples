@@ -15,7 +15,11 @@ public class TankDriveTeleOp extends LinearOpMode{
         DcMotor leftMotor = hardwareMap.get(DcMotor.class, LEFT_MOTOR_CONFIG_NAME);
         DcMotor rightMotor = hardwareMap.get(DcMotor.class, RIGHT_MOTOR_CONFIG_NAME);
 
-        while (true){
+        waitForStart();
+
+        if (isStopRequested()) return;
+
+        while (opModeIsActive()) {
             leftMotor.setPower(gamepad1.left_stick_y);
             rightMotor.setPower(gamepad1.right_stick_y);
         }

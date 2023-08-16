@@ -1,48 +1,28 @@
-/*
- * Copyright (c) 2021 OpenFTC Team
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
-
-package org.firstinspires.ftc.teamcode.KiwiDrive.Autonomous;
+package org.firstinspires.ftc.teamcode.TankDrive.Autonomous;
 
 import android.annotation.SuppressLint;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Camera.AprilTag.AprilTagDetectionPipeline;
-import org.firstinspires.ftc.teamcode.KiwiDrive.BaseMovment.KiwiDriveCommands;
+import org.firstinspires.ftc.teamcode.TankDrive.BaseMovment.TankDriveCommands;
 import org.openftc.apriltag.AprilTagDetection;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 @Disabled
-@Autonomous(name = "KiwiAutonomousAprilTag")
-public class KiwiAutonomousAprilTag extends LinearOpMode
-{
+@Autonomous(name="TankDriveAutonomousAprilTag")
+public class TankDriveAutonomousAprilTag extends LinearOpMode {
     //region CameraSpecs(CHANGE LENS INTRINSICS)
     private OpenCvCamera camera;
     private static final double FEET_PER_METER = 3.28084;
@@ -61,27 +41,25 @@ public class KiwiAutonomousAprilTag extends LinearOpMode
     //region TagSpecs(SET TAG SPECS)
     // UNITS ARE METERS
     private double tagsize = 0.166;
+    private AprilTagDetection tagOfInterest = null;
     private final byte TAG_1 = 1;
     private final byte TAG_2 = 2;
     private final byte TAG_3 = 3;
 
-    private AprilTagDetection tagOfInterest = null;//DO NOT CHANGE
-    //endregion
+    //endregion(SET TAG SPECS)
 
-    private final String FRONT_LEFT_MOTOR_CONFIG_NAME = "leftMotor";
-    private final String FRONT_RIGHT_MOTOR_CONFIG_NAME = "rightMotor";
-    private final String REAR_MOTOR_Config_NAME = "rearMotor";
-    private DcMotor frontLeftMotor;
-    private DcMotor frontRightMotor;
-    private DcMotor rearMotor;
-    private final KiwiDriveCommands driveCommands = new KiwiDriveCommands(frontLeftMotor, frontRightMotor, rearMotor);
+    private final String LEFT_MOTOR_CONFIG_NAME = "leftMotor";
+    private final String RIGHT_MOTOR_CONFIG_NAME = "rightMotor";
+    private DcMotor leftMotor;
+    private DcMotor rightMotor;
+    private final TankDriveCommands driveCommands = new TankDriveCommands(leftMotor, rightMotor);
 
     @Override
     public void runOpMode()
     {
-        frontRightMotor = hardwareMap.get(DcMotor.class, FRONT_RIGHT_MOTOR_CONFIG_NAME);
-        frontLeftMotor = hardwareMap.get(DcMotor.class, FRONT_LEFT_MOTOR_CONFIG_NAME);
-        rearMotor = hardwareMap.get(DcMotor.class, REAR_MOTOR_Config_NAME);
+        leftMotor = hardwareMap.get(DcMotor.class, LEFT_MOTOR_CONFIG_NAME);
+        rightMotor = hardwareMap.get(DcMotor.class, RIGHT_MOTOR_CONFIG_NAME);
+
 
         int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
         camera = OpenCvCameraFactory.getInstance().createWebcam(hardwareMap.get(WebcamName.class, "Webcam 1"), cameraMonitorViewId);
@@ -189,7 +167,7 @@ public class KiwiAutonomousAprilTag extends LinearOpMode
         /* Actually do something useful */
         if(tagOfInterest == null)
         {
-           //If no tag of interest is seen, do:
+            //If no tag of interest is seen, do:
         }
         else
         {

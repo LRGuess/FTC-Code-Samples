@@ -24,20 +24,13 @@ public class KiwiDriveTeleOp extends LinearOpMode{
         DcMotor motorFL = hardwareMap.get(DcMotor.class, "motorFL");
         DcMotor motorFR = hardwareMap.get(DcMotor.class, "motorFR");
         DcMotor motorR = hardwareMap.get(DcMotor.class, "motorR");
-        DcMotor viperSlideMotor = hardwareMap.get(DcMotor.class, "viperSlideMotor");
-        Servo armServo = hardwareMap.get(Servo.class, "armServo");
-        Servo handServo = hardwareMap.get(Servo.class, "handServo");
 
         telemetry.update();
         waitForStart();
-        if (opModeInInit()){
-            viperSlideMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-            viperSlideMotor.setDirection(DcMotorSimple.Direction.FORWARD);
-            armServo.setDirection(Servo.Direction.FORWARD);
-            handServo.setDirection(Servo.Direction.FORWARD);
-        }
 
-        while (opModeIsActive()){
+        if (isStopRequested()) return;
+
+        while (opModeIsActive()) {
             leftStickXValue = this.gamepad1.left_stick_x;
             leftStickYValue = this.gamepad1.left_stick_y;
             rightStickXValue = this.gamepad1.right_stick_x;
